@@ -7,9 +7,11 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetClose, SheetDescription } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
 import { systems, objectTypes, seasons, advantages, type Lang } from "./content";
+import { seoFaq } from "./seo-content";
 import { teamMembers, caseStudies } from "./portfolio";
 import { siteSettings, whatsappUrl } from "./site-settings";
 import { track } from "./analytics";
+import { servicePath } from "./service-pages";
 
 const systemIcons = [Zap, Wind, Wind, Flame, Droplets, Settings2, ShieldCheck, Cctv, KeyRound, Radio];
 const media = ["/media/engineering.webp", "/media/management.webp", "/media/security.webp", "/architecture.webp"];
@@ -49,7 +51,6 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
   const publishedCases = caseStudies.filter(item => item.published);
   const people = teamMembers.filter(person => person.published && person.photo);
   const hasResidential = publishedCases.some(item => item.category === "residential");
-  const selectedObject = objectTypes.find(item => item.id === kind) || objectTypes[0];
   const nav = [
     ["inside", t("Наш подход", "Басқару тәсілі")],
     ["advantages", t("Преимущества", "Артықшылықтар")],
@@ -62,6 +63,20 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
   const waMessage = t("Здравствуйте! Хочу обсудить управление объектом с AAA URBAN.", "Сәлеметсіз бе! AAA URBAN компаниясымен нысанды басқаруды талқылағым келеді.");
   const auditMessage = t("Здравствуйте! Хочу заказать бесплатный аудит ЖК. Название и адрес объекта: ", "Сәлеметсіз бе! Тұрғын үй кешеніне тегін аудитке өтінім бергім келеді. Нысанның атауы мен мекенжайы: ");
   const privacyPath = kz ? "/kz/privacy" : "/privacy";
+  const stageServiceLinks = [
+    servicePath("engineering-systems", lang),
+    servicePath("property-management", lang),
+    servicePath("building-operation", lang),
+    servicePath("building-operation", lang),
+  ];
+  const objectServiceLinks: Record<string, string> = {
+    residential: servicePath("residential-complex", lang),
+    business: servicePath("business-center", lang),
+    hotel: servicePath("commercial-property", lang),
+    retail: servicePath("commercial-property", lang),
+    residence: servicePath("property-management", lang),
+    warehouse: servicePath("commercial-property", lang),
+  };
 
   useEffect(() => {
     document.documentElement.lang = kz ? "kk" : "ru";
@@ -221,7 +236,10 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
                 {seasons.map(item => <TabsContent forceMount hidden={season !== item.id} key={item.id} value={item.id}><Leaf size={23} /><p>{kz ? item.descKz : item.descRu}</p></TabsContent>)}
               </Tabs>
             </>}
-            <a className="text-button dark-link" href="#contact" onClick={() => proposal("service_" + index)}>{t("Обсудить задачи объекта", "Нысан міндеттерін талқылау")}<ArrowUpRight size={18} /></a>
+            <div className="service-copy-actions">
+              <a className="service-learn-link" href={stageServiceLinks[index]}>{t("Подробнее об услуге", "Қызмет туралы толығырақ")}<ArrowRight size={17} /></a>
+              <a className="text-button dark-link" href="#contact" onClick={() => proposal("service_" + index)}>{t("Обсудить задачи объекта", "Нысан міндеттерін талқылау")}<ArrowUpRight size={18} /></a>
+            </div>
           </div>
           <div className={"service-photo photo-" + index}>
             <motion.img key={stage === String(index) ? stage : "idle"} src={media[index]} alt={t("Иллюстрация направления: ", "Бағытты бейнелейтін сурет: ") + label} loading="lazy" width="1100" height="1000" initial={false} animate={{ scale: stage === String(index) && !reducedMotion ? 1.025 : 1 }} transition={{ duration: 1.4 }} />
@@ -251,8 +269,8 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
       <Tabs value={kind} onValueChange={value => { setKind(value); track("object_select", { object_type: value }); }} className="object-tabs">
         <TabsList className="tab-rail" aria-label={t("Типы недвижимости", "Жылжымайтын мүлік түрлері")}>{objectTypes.map((item, i) => <TabsTrigger key={item.id} value={item.id}><span>0{i + 1}</span>{kz ? item.kz : item.ru}</TabsTrigger>)}</TabsList>
         {objectTypes.map((item, i) => <TabsContent key={item.id} value={item.id} forceMount hidden={kind !== item.id} className="object-panel">
-          <div className="object-info"><span className="object-count">0{i + 1}<small>/ 06</small></span><h3>{kz ? item.kz : item.ru}</h3><p>{kz ? item.descKz : item.descRu}</p><ul>{(kz ? item.tagsKz : item.tagsRu).map(tag => <li key={tag}><Check size={17} />{tag}</li>)}</ul><a className="text-button" href="#contact" onClick={() => proposal("object", item.id)}>{t("Обсудить такой объект", "Осындай нысанды талқылау")}<ArrowUpRight size={19} /></a></div>
-          <figure className="object-visual"><img src={objectMedia[item.id]} alt={t("Иллюстрация типа недвижимости: ", "Жылжымайтын мүлік түрінің суреті: ") + (kz ? item.kz : item.ru)} width="1000" height="800" loading="lazy" /><figcaption><span>AAA URBAN / 0{i + 1}</span><span>{kz ? selectedObject.kz : selectedObject.ru}</span></figcaption></figure>
+          <div className="object-info"><span className="object-count">0{i + 1}<small>/ 06</small></span><h3>{kz ? item.kz : item.ru}</h3><p>{kz ? item.descKz : item.descRu}</p><ul>{(kz ? item.tagsKz : item.tagsRu).map(tag => <li key={tag}><Check size={17} />{tag}</li>)}</ul><div className="object-actions"><a className="service-learn-link" href={objectServiceLinks[item.id]}>{t("Подробнее", "Толығырақ")}<ArrowRight size={17} /></a><a className="text-button" href="#contact" onClick={() => proposal("object", item.id)}>{t("Обсудить такой объект", "Осындай нысанды талқылау")}<ArrowUpRight size={19} /></a></div></div>
+          <figure className="object-visual"><img src={objectMedia[item.id]} alt={t("Иллюстрация типа недвижимости: ", "Жылжымайтын мүлік түрінің суреті: ") + (kz ? item.kz : item.ru)} width="1000" height="800" loading="lazy" /><figcaption><span>AAA URBAN / 0{i + 1}</span><span>{kz ? item.kz : item.ru}</span></figcaption></figure>
         </TabsContent>)}
       </Tabs>
     </section>
@@ -264,12 +282,12 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
         <Heading>{t("От инженерных систем —", "Инженерлік жүйелерден —")}<br /><em>{t("до бюджета объекта.", "нысан бюджетіне дейін.")}</em></Heading>
         <p>{t("Техническое обслуживание, подрядчики, документация и ремонты требуют постоянной координации. Объединяем эти задачи в рамках комплексной эксплуатации.", "Техникалық қызмет көрсету, мердігерлер, құжаттама және жөндеу тұрақты үйлестіруді қажет етеді. Бұл міндеттерді кешенді пайдалану аясында біріктіреміз.")}</p>
         <div className="commercial-processes">{[t("Инженерия", "Инженерия"), t("Подрядчики", "Мердігерлер"), t("Бюджет", "Бюджет"), t("Документация", "Құжаттама")].map((label, i) => <span key={label} data-reveal><small>0{i + 1}</small>{label}<ArrowUpRight size={17} /></span>)}</div>
-        <a className="button primary" href="#contact" onClick={() => proposal("commercial", "business")}>{t("Получить предложение", "Ұсыныс алу")}<ArrowUpRight size={18} /></a>
+        <div className="commercial-actions"><a className="service-learn-link light" href={servicePath("commercial-property", lang)}>{t("Подробнее об управлении коммерческой недвижимостью", "Коммерциялық жылжымайтын мүлікті басқару туралы")}<ArrowRight size={17} /></a><a className="button primary" href="#contact" onClick={() => proposal("commercial", "business")}>{t("Получить предложение", "Ұсыныс алу")}<ArrowUpRight size={18} /></a></div>
       </div>
     </section>
 
     <section className={"section osi " + (managed ? "is-managed" : "")} id="osi">
-      <div className="osi-copy"><Eyebrow number="06">{t("ДЛЯ СОБСТВЕННИКОВ И ОСИ", "МЕНШІК ИЕЛЕРІ МЕН МИБ ҮШІН")}</Eyebrow><Heading>{t("Дом — для жизни.", "Үй — өмір сүру үшін.")}<br /><em>{t("Не для проблем.", "Мәселелер үшін емес.")}</em></Heading><p>{t("Обращения жителей, расходы, подрядчики и состояние дома. Берём ежедневные задачи в единую систему управления.", "Тұрғындардың өтініштері, шығындар, мердігерлер және үйдің жай-күйі. Күнделікті міндеттерді біртұтас басқару жүйесіне біріктіреміз.")}</p><a href="#contact" className="button primary" onClick={() => proposal("osi", "residential")}>{t("Предложение для вашего ЖК", "Тұрғын үй кешеніне ұсыныс")}<ArrowUpRight size={18} /></a></div>
+      <div className="osi-copy"><Eyebrow number="06">{t("ДЛЯ СОБСТВЕННИКОВ И ОСИ", "МЕНШІК ИЕЛЕРІ МЕН МИБ ҮШІН")}</Eyebrow><Heading>{t("Дом — для жизни.", "Үй — өмір сүру үшін.")}<br /><em>{t("Не для проблем.", "Мәселелер үшін емес.")}</em></Heading><p>{t("Обращения жителей, расходы, подрядчики и состояние дома. Берём ежедневные задачи в единую систему управления.", "Тұрғындардың өтініштері, шығындар, мердігерлер және үйдің жай-күйі. Күнделікті міндеттерді біртұтас басқару жүйесіне біріктіреміз.")}</p><div className="osi-actions"><a className="service-learn-link" href={servicePath("osi-management", lang)}>{t("Управление для ОСИ", "МИБ үшін басқару")}<ArrowRight size={17} /></a><a href="#contact" className="button primary" onClick={() => proposal("osi", "residential")}>{t("Предложение для вашего ЖК", "Тұрғын үй кешеніне ұсыныс")}<ArrowUpRight size={18} /></a></div></div>
       <div className="osi-life"><div className="osi-photo" /><div className="osi-photo-shade" /><div className="osi-state">
         <span>{managed ? t("СИСТЕМНЫЙ ПОДХОД", "ЖҮЙЕЛІ ТӘСІЛ") : t("ЗНАКОМАЯ СИТУАЦИЯ?", "ТАНЫС ЖАҒДАЙ МА?")}</span>
         <div className="problems">{[
@@ -284,7 +302,7 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
 
     <section className="section audit" id="audit">
       <div className="audit-marker" aria-hidden="true"><ClipboardList size={34} /><span>AAA<br />URBAN</span><ArrowDownRight size={42} /></div>
-      <div className="audit-copy"><Eyebrow>{t("БЕСПЛАТНЫЙ АУДИТ ЖИЛОГО КОМПЛЕКСА", "ТҰРҒЫН ҮЙ КЕШЕНІНІҢ ТЕГІН АУДИТІ")}</Eyebrow><Heading>{t("Что в вашем ЖК", "Тұрғын үй кешеніңізде")}<br /><em>{t("требует внимания?", "неге назар аудару керек?")}</em></Heading><p>{t("Проверим состояние жилого комплекса: что работает исправно, а какие вопросы требуют решения.", "Тұрғын үй кешенінің жай-күйін тексереміз: не дұрыс жұмыс істейді, қандай мәселелерді шешу қажет.")}</p><a className="button audit-button" href={whatsappUrl(auditMessage)} target="_blank" rel="noopener noreferrer" onClick={() => whatsappClick("free_audit")}>{t("Заказать бесплатный аудит", "Тегін аудитке өтінім беру")}<ArrowUpRight size={19} /></a></div>
+      <div className="audit-copy"><Eyebrow>{t("БЕСПЛАТНЫЙ АУДИТ ЖИЛОГО КОМПЛЕКСА", "ТҰРҒЫН ҮЙ КЕШЕНІНІҢ ТЕГІН АУДИТІ")}</Eyebrow><Heading>{t("Что в вашем ЖК", "Тұрғын үй кешеніңізде")}<br /><em>{t("требует внимания?", "неге назар аудару керек?")}</em></Heading><p>{t("Проверим состояние жилого комплекса: что работает исправно, а какие вопросы требуют решения.", "Тұрғын үй кешенінің жай-күйін тексереміз: не дұрыс жұмыс істейді, қандай мәселелерді шешу қажет.")}</p><div className="audit-actions"><a className="service-learn-link audit-link" href={servicePath("residential-audit", lang)}>{t("Что входит в первичный аудит", "Бастапқы аудит нені қамтиды")}<ArrowRight size={17} /></a><a className="button audit-button" href={whatsappUrl(auditMessage)} target="_blank" rel="noopener noreferrer" onClick={() => whatsappClick("free_audit")}>{t("Заказать бесплатный аудит", "Тегін аудитке өтінім беру")}<ArrowUpRight size={19} /></a></div></div>
     </section>
 
     <section className="section team" id="team">
@@ -314,9 +332,25 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
       </article>)}</div>
     </section>
 
+    <section className="section faq" id="faq">
+      <div className="section-head">
+        <div>
+          <Eyebrow number="09">{t("ВОПРОСЫ ОБ УПРАВЛЕНИИ ОБЪЕКТОМ", "НЫСАНДЫ БАСҚАРУ ТУРАЛЫ СҰРАҚТАР")}</Eyebrow>
+          <Heading>{t("Коротко о", "Қысқаша")}<br /><em>{t("главном.", "негізгісі.")}</em></Heading>
+        </div>
+        <p>{t("Прямые ответы о составе услуг, типах объектов и начале работы с AAA URBAN.", "Қызметтер құрамы, нысан түрлері және AAA URBAN-пен жұмысты бастау туралы нақты жауаптар.")}</p>
+      </div>
+      <div className="faq-list">
+        {seoFaq.map((item, index) => <details key={item.question.ru} className="faq-item">
+          <summary><span>{String(index + 1).padStart(2, "0")}</span>{item.question[lang]}<Plus size={18} aria-hidden="true" /></summary>
+          <p>{item.answer[lang]}</p>
+        </details>)}
+      </div>
+    </section>
+
     <section className="section contact" id="contact">
       <div className="contact-image" /><div className="contact-shade" />
-      <div className="contact-copy"><Eyebrow number="09">{t("НАЧНЁМ С ВАШЕГО ОБЪЕКТА", "НЫСАНЫҢЫЗДАН БАСТАЙЫҚ")}</Eyebrow><Heading>{t("Давайте обсудим", "Нысаныңызды")}<br /><em>{t("ваш объект.", "талқылайық.")}</em></Heading><p>{t("Расскажите о недвижимости и задачах — подготовим предложение по управлению и эксплуатации.", "Жылжымайтын мүлік пен міндеттер туралы айтыңыз — басқару және пайдалану бойынша ұсыныс дайындаймыз.")}</p>
+      <div className="contact-copy"><Eyebrow number="10">{t("НАЧНЁМ С ВАШЕГО ОБЪЕКТА", "НЫСАНЫҢЫЗДАН БАСТАЙЫҚ")}</Eyebrow><Heading>{t("Давайте обсудим", "Нысаныңызды")}<br /><em>{t("ваш объект.", "талқылайық.")}</em></Heading><p>{t("Расскажите о недвижимости и задачах — подготовим предложение по управлению и эксплуатации.", "Жылжымайтын мүлік пен міндеттер туралы айтыңыз — басқару және пайдалану бойынша ұсыныс дайындаймыз.")}</p>
         <div className="contact-links">
           <a href={"tel:" + siteSettings.phone} onClick={() => track("phone_click", { language: lang })}><Phone size={18} /><span>{siteSettings.phoneDisplay}</span><ArrowUpRight size={16} /></a>
           <a href={"mailto:" + siteSettings.email} onClick={() => track("email_click", { language: lang })}><Mail size={18} /><span>{siteSettings.email}</span><ArrowUpRight size={16} /></a>

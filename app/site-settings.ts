@@ -1,6 +1,6 @@
 /** Публичные настройки. Меняйте значения в кавычках, сохраняя имена полей. */
 export const siteSettings = {
-  siteUrl: "https://aaaurban.aaaurban.workers.dev",
+  siteUrl: "https://aaaurbanver2.corparationsite.workers.dev",
   phoneDisplay: "+7 701 220 01 12",
   phone: "+77012200112",
   whatsapp: "77012200112", // Международный номер без плюса и пробелов.
