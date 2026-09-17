@@ -11,7 +11,7 @@ import { seoFaq } from "./seo-content";
 import { teamMembers, caseStudies } from "./portfolio";
 import { siteSettings, whatsappUrl } from "./site-settings";
 import { track } from "./analytics";
-import { servicePath } from "./service-pages";
+import { servicePath, type ServicePageKey } from "./service-pages";
 
 const systemIcons = [Zap, Wind, Wind, Flame, Droplets, Settings2, ShieldCheck, Cctv, KeyRound, Radio];
 const media = ["/media/engineering.webp", "/media/management.webp", "/media/security.webp", "/architecture.webp"];
@@ -52,12 +52,21 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
   const people = teamMembers.filter(person => person.published && person.photo);
   const hasResidential = publishedCases.some(item => item.category === "residential");
   const nav = [
-    ["inside", t("Наш подход", "Басқару тәсілі")],
     ["advantages", t("Преимущества", "Артықшылықтар")],
     ["objects", t("Объекты", "Нысандар")],
     ["osi", t("Для ОСИ", "МИБ үшін")],
     ["team", t("Команда", "Команда")],
     ["contact", t("Контакты", "Байланыс")],
+  ];
+  const serviceLinks: { key: ServicePageKey; label: string }[] = [
+    { key: "property-management", label: t("Управление недвижимостью", "Жылжымайтын мүлікті басқару") },
+    { key: "building-operation", label: t("Эксплуатация зданий", "Ғимараттарды пайдалану") },
+    { key: "engineering-systems", label: t("Инженерные системы", "Инженерлік жүйелер") },
+    { key: "osi-management", label: t("Управление для ОСИ", "МИБ үшін басқару") },
+    { key: "residential-complex", label: t("Управление ЖК", "Тұрғын үй кешенін басқару") },
+    { key: "business-center", label: t("Управление бизнес-центром", "Бизнес-орталықты басқару") },
+    { key: "commercial-property", label: t("Коммерческая недвижимость", "Коммерциялық жылжымайтын мүлік") },
+    { key: "residential-audit", label: t("Бесплатный аудит ЖК", "Тұрғын үй кешенінің тегін аудиті") },
   ];
   const stageLabels = [t("Инженерия", "Инженерия"), t("Управление", "Басқару"), t("Безопасность", "Қауіпсіздік"), t("Территория", "Аумақ")];
   const waMessage = t("Здравствуйте! Хочу обсудить управление объектом с AAA URBAN.", "Сәлеметсіз бе! AAA URBAN компаниясымен нысанды басқаруды талқылағым келеді.");
@@ -132,7 +141,19 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
     <a className="skip-link" href="#inside">{t("Перейти к содержанию", "Мазмұнға өту")}</a>
     <header className="site-header">
       <Brand lang={lang} />
-      <nav aria-label={t("Главная навигация", "Негізгі навигация")}>
+      <nav className="desktop-nav" aria-label={t("Главная навигация", "Негізгі навигация")}>
+        <div className="services-menu">
+          <button className="services-menu-trigger" type="button" aria-haspopup="true">
+            {t("Услуги", "Қызметтер")}<ArrowDown size={14} aria-hidden="true" />
+          </button>
+          <div className="services-dropdown" aria-label={t("Страницы услуг", "Қызмет беттері")}>
+            {serviceLinks.map((item) => (
+              <a key={item.key} href={servicePath(item.key, lang)}>
+                <span>{item.label}</span><ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </div>
         {nav.map(([id, label]) => <a key={id} href={"#" + id}>{label}</a>)}
       </nav>
       <div className="header-actions">
@@ -146,7 +167,15 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
           <SheetContent className="mobile-sheet" showCloseButton={false}>
             <div className="sheet-heading"><SheetTitle>AAA URBAN</SheetTitle><SheetClose aria-label={t("Закрыть меню", "Мәзірді жабу")}><X /></SheetClose></div>
             <SheetDescription className="sr-only">{t("Навигация по сайту", "Сайт бойынша навигация")}</SheetDescription>
-            <nav>{nav.map(([id, label]) => <SheetClose asChild key={id}><a href={"#" + id}>{label}<ArrowUpRight size={20} /></a></SheetClose>)}</nav>
+            <nav>
+              <p className="mobile-services-heading">{t("Услуги", "Қызметтер")}</p>
+              <div className="mobile-services-list">
+                {serviceLinks.map((item) => <SheetClose asChild key={item.key}><a href={servicePath(item.key, lang)}>{item.label}<ArrowUpRight size={18} /></a></SheetClose>)}
+              </div>
+              <div className="mobile-primary-nav">
+                {nav.map(([id, label]) => <SheetClose asChild key={id}><a href={"#" + id}>{label}<ArrowUpRight size={20} /></a></SheetClose>)}
+              </div>
+            </nav>
             <SheetClose asChild><a className="button primary" href="#audit">{t("Бесплатный аудит ЖК", "Тұрғын үй кешенінің тегін аудиті")}<ArrowUpRight size={18} /></a></SheetClose>
           </SheetContent>
         </Sheet>
@@ -376,6 +405,10 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
     <footer className="site-footer">
       <Brand lang={lang} />
       <div className="footer-description"><p>{t("Управление и эксплуатация недвижимости.", "Жылжымайтын мүлікті басқару және пайдалану.")}</p><small>© 2026 AAA URBAN</small></div>
+      <div className="footer-services">
+        <strong>{t("Услуги", "Қызметтер")}</strong>
+        <div>{serviceLinks.map((item) => <a key={item.key} href={servicePath(item.key, lang)}>{item.label}</a>)}</div>
+      </div>
       <div className="footer-links"><a href={privacyPath}>{t("Обработка данных", "Деректерді өңдеу")}</a><a href="#home">{t("Наверх", "Жоғары")}<ArrowUpRight size={16} /></a></div>
     </footer>
     <a className="mobile-whatsapp" href={whatsappUrl(waMessage)} target="_blank" rel="noopener noreferrer" onClick={() => whatsappClick("mobile")} aria-label={t("Обсудить объект в WhatsApp", "Нысанды WhatsApp-та талқылау")}><MessageCircle size={21} /><span>{t("Обсудить объект", "Нысанды талқылау")}</span><ArrowUpRight size={18} /></a>
