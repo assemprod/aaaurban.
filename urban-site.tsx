@@ -168,12 +168,10 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
             <div className="sheet-heading"><SheetTitle>AAA URBAN</SheetTitle><SheetClose aria-label={t("Закрыть меню", "Мәзірді жабу")}><X /></SheetClose></div>
             <SheetDescription className="sr-only">{t("Навигация по сайту", "Сайт бойынша навигация")}</SheetDescription>
             <nav>
-              <details className="mobile-services-submenu">
-                <summary>{t("Услуги", "Қызметтер")}<ArrowDown size={18} aria-hidden="true" /></summary>
-                <div className="mobile-services-list">
-                  {serviceLinks.map((item) => <SheetClose asChild key={item.key}><a href={servicePath(item.key, lang)}>{item.label}<ArrowUpRight size={18} /></a></SheetClose>)}
-                </div>
-              </details>
+              <p className="mobile-services-heading">{t("Услуги", "Қызметтер")}</p>
+              <div className="mobile-services-list">
+                {serviceLinks.map((item) => <SheetClose asChild key={item.key}><a href={servicePath(item.key, lang)}>{item.label}<ArrowUpRight size={18} /></a></SheetClose>)}
+              </div>
               <div className="mobile-primary-nav">
                 {nav.map(([id, label]) => <SheetClose asChild key={id}><a href={"#" + id}>{label}<ArrowUpRight size={20} /></a></SheetClose>)}
               </div>
@@ -338,16 +336,6 @@ export default function UrbanSite({ lang = "ru" }: { lang?: Lang }) {
 
     <section className="section team" id="team">
       <div className="section-head"><div><Eyebrow number="07">{t("ЛЮДИ AAA URBAN", "AAA URBAN МАМАНДАРЫ")}</Eyebrow><Heading>{t("За каждым объектом", "Әр нысанның артында")}<br /><em>{t("стоят люди.", "адамдар тұр.")}</em></Heading></div><p>{t("Инженеры, диспетчеры, электрики, сантехники и эксплуатационная команда. Разные компетенции — общий объект.", "Инженерлер, диспетчерлер, электриктер, сантехниктер және пайдалану тобы. Әртүрлі құзырет — ортақ нысан.")}</p></div>
-      <div className="team-visuals">
-        <figure data-reveal>
-          <img src="/media/engineering.webp" alt={t("Инженерная работа на объекте AAA URBAN", "AAA URBAN нысанындағы инженерлік жұмыс")} width="1200" height="900" loading="lazy" />
-          <figcaption><span>{t("Инженерная команда", "Инженерлік команда")}</span><span>{t("Системы · контроль · эксплуатация", "Жүйелер · бақылау · пайдалану")}</span></figcaption>
-        </figure>
-        <figure data-reveal>
-          <img src="/media/team-operations.jpeg" alt={t("Специалист AAA URBAN на объекте", "AAA URBAN маманы нысанда")} width="1100" height="1376" loading="lazy" />
-          <figcaption><span>{t("Команда на объекте", "Нысандағы команда")}</span><span>{t("Люди · здание · ответственность", "Адамдар · ғимарат · жауапкершілік")}</span></figcaption>
-        </figure>
-      </div>
       {people.length > 0 && <div className="team-gallery">{people.map(person => <figure key={person.id} data-reveal><img src={person.photo} alt={person.name[lang]} width="600" height="750" loading="lazy" style={{ objectPosition: person.position || "50% 30%" }} /><figcaption><strong>{person.name[lang]}</strong><span>{person.role[lang]}</span></figcaption></figure>)}</div>}
       <div className="team-specialties">{[
         [Settings2, t("Инженерия", "Инженерия"), t("Оборудование и системы здания", "Ғимарат жабдығы мен жүйелері")],
