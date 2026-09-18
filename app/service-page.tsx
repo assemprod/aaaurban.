@@ -6,6 +6,7 @@ import {
   Check,
   Mail,
   MapPin,
+  Menu,
   MessageCircle,
   Phone,
   Plus,
@@ -195,6 +196,25 @@ export default function ServicePage({ pageKey, lang }: { pageKey: ServicePageKey
               {lang === "kz" ? "Нысанды талқылау" : "Обсудить объект"}<ArrowUpRight size={16} />
             </a>
           </div>
+          <details className="service-mobile-nav">
+            <summary aria-label={lang === "kz" ? "Мәзірді ашу" : "Открыть меню"}><Menu size={27} /></summary>
+            <div className="service-mobile-nav-panel">
+              <a href={home}>{lang === "kz" ? "Басты бет" : "Главная"}</a>
+              <details className="service-mobile-services">
+                <summary>{lang === "kz" ? "Қызметтер" : "Услуги"}<Plus size={18} /></summary>
+                <div>
+                  {servicePageKeys.map((key) => (
+                    <a key={key} href={servicePath(key, lang)} aria-current={key === pageKey ? "page" : undefined}>
+                      {localizedText(servicePages[key].title, lang)}<ArrowRight size={15} />
+                    </a>
+                  ))}
+                </div>
+              </details>
+              <a href="#service-process">{lang === "kz" ? "Үдеріс" : "Процесс"}</a>
+              <a href="#service-faq">FAQ</a>
+              <a href="#service-contact">{lang === "kz" ? "Байланыс" : "Контакты"}</a>
+            </div>
+          </details>
         </header>
 
         <section className="service-landing-hero" data-service-reveal>

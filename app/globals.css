@@ -1076,3 +1076,489 @@ h2 em { color: #969b9d; }
 html { scroll-padding-top: 112px; }
 @media (max-width: 900px) { html { scroll-padding-top: 96px; } }
 @media (max-width: 640px) { html { scroll-padding-top: 86px; } }
+
+/* ========================================================================== */
+/* 2026-09-18 MOBILE SERVICE PAGE READABILITY GATE                            */
+/* Final overrides intentionally live at the end of the stylesheet so the     */
+/* individual desktop art-direction variants cannot re-introduce narrow grids. */
+/* ========================================================================== */
+@media (max-width: 760px) {
+  .service-page-shell {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .service-page-shell *,
+  .service-page-shell *::before,
+  .service-page-shell *::after {
+    min-width: 0;
+  }
+
+  .service-page-shell .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    width: 100%;
+    height: 80px;
+    padding-inline: 20px;
+    background: rgba(26, 28, 30, .97);
+    backdrop-filter: blur(14px);
+  }
+
+  .service-page-shell .brand img {
+    width: 42px;
+    height: 54px;
+  }
+
+  .service-page-shell .languages {
+    font-size: 15px;
+    gap: 8px;
+  }
+
+  .service-landing-hero {
+    min-height: calc(100svh - 80px);
+  }
+
+  .service-landing-content {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    padding: 112px 20px 118px !important;
+  }
+
+  .service-back {
+    margin-bottom: 36px;
+    font-size: 15px;
+  }
+
+  .service-landing-content .eyebrow {
+    max-width: 100%;
+    font-size: 11px;
+    line-height: 1.55;
+    letter-spacing: .11em;
+  }
+
+  .service-landing-content h1 {
+    width: 100%;
+    max-width: 100%;
+    margin: 24px 0 24px;
+    font-size: clamp(42px, 12.6vw, 58px);
+    line-height: 1.03;
+    letter-spacing: -.045em;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  .service-landing-content h1 em {
+    font-size: .9em;
+    line-height: 1.02;
+  }
+
+  .service-landing-lead {
+    width: 100%;
+    max-width: 34rem;
+    font-size: 16px;
+    line-height: 1.72;
+  }
+
+  .service-landing-content .hero-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .service-landing-content .hero-buttons .button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .service-landing-content .hero-buttons .text-button {
+    width: fit-content;
+    padding-block: 11px;
+  }
+
+  .service-hero-index {
+    right: 18px;
+    bottom: 26px;
+    gap: 11px;
+    font-size: 9px;
+  }
+
+  /* Every light content section uses the same readable mobile measure. */
+  .service-audience,
+  .service-content-section,
+  .service-faq-section,
+  .service-related-section,
+  .service-process-section,
+  .service-contact-section {
+    width: 100%;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .service-audience {
+    display: block !important;
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .service-audience h2,
+  .service-section-heading h2,
+  .service-process-copy h2 {
+    max-width: 100%;
+    font-size: clamp(32px, 9vw, 40px) !important;
+    line-height: 1.08;
+    letter-spacing: -.035em;
+    overflow-wrap: break-word;
+  }
+
+  .service-audience h2 {
+    margin-bottom: 32px;
+  }
+
+  .service-audience ul {
+    width: 100%;
+  }
+
+  .service-audience li {
+    width: 100%;
+    gap: 12px;
+    padding: 18px 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .service-content-section,
+  .service-faq-section,
+  .service-related-section {
+    padding-top: 68px !important;
+    padding-bottom: 68px !important;
+  }
+
+  .service-section-heading,
+  .service-section-heading.compact {
+    display: block !important;
+    width: 100%;
+    margin-bottom: 34px;
+  }
+
+  .service-section-heading h2 {
+    margin: 20px 0 18px;
+  }
+
+  .service-section-heading > p:last-child {
+    width: 100%;
+    max-width: 42rem;
+    font-size: 15px !important;
+    line-height: 1.72;
+  }
+
+  /* Critical: all service-card variants collapse to ONE column on phones. */
+  .service-detail-grid,
+  .service-related-grid,
+  .service-variant-property-management .service-detail-grid,
+  .service-variant-building-operation .service-detail-grid,
+  .service-variant-residential-complex .service-detail-grid,
+  .service-variant-commercial-property .service-detail-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    width: 100%;
+    border-top: 1px solid #c4c9ca;
+  }
+
+  .service-detail-grid article,
+  .service-detail-grid article + article,
+  .service-detail-grid article:nth-child(1),
+  .service-detail-grid article:nth-child(2),
+  .service-detail-grid article:nth-child(3),
+  .service-detail-grid article:nth-child(4),
+  .service-related-grid > a,
+  .service-related-grid > a + a,
+  .service-related-grid > a:nth-child(1),
+  .service-related-grid > a:nth-child(2),
+  .service-related-grid > a:nth-child(3),
+  .service-related-grid > a:nth-child(4) {
+    grid-column: auto !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    transform: none !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid #c5cbcc !important;
+    padding: 31px 0 34px !important;
+    overflow: visible !important;
+  }
+
+  .service-detail-grid article:last-child,
+  .service-related-grid > a:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .service-detail-grid article > span,
+  .service-related-grid > a > span {
+    display: block;
+    margin-bottom: 24px;
+    font-size: 11px;
+    letter-spacing: .13em;
+  }
+
+  .service-detail-grid h3,
+  .service-related-grid h3 {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 14px !important;
+    font-size: clamp(27px, 8vw, 34px) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.035em;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+  }
+
+  .service-detail-grid p,
+  .service-related-grid p {
+    width: 100%;
+    max-width: 39rem;
+    padding-right: 0 !important;
+    font-size: 16px !important;
+    line-height: 1.68 !important;
+    overflow-wrap: break-word;
+  }
+
+  .service-detail-grid article > i {
+    left: 0;
+    bottom: 0;
+    height: 2px;
+  }
+
+  /* Preserve special page identity without sacrificing readability. */
+  .service-variant-commercial-property .service-detail-grid article:nth-child(1) {
+    margin: 0 -20px;
+    width: calc(100% + 40px) !important;
+    padding: 32px 20px 36px !important;
+  }
+
+  .service-variant-engineering-systems .service-detail-grid article,
+  .service-variant-engineering-systems .service-detail-grid article + article {
+    border-bottom-color: rgba(255,255,255,.2) !important;
+  }
+
+  .service-variant-residential-audit .service-detail-grid article,
+  .service-variant-residential-audit .service-detail-grid article + article {
+    border-bottom-color: rgba(255,255,255,.34) !important;
+  }
+
+  .service-process-section {
+    display: block !important;
+    padding-top: 68px !important;
+    padding-bottom: 68px !important;
+  }
+
+  .service-process-copy {
+    position: static !important;
+    width: 100%;
+    margin-bottom: 38px;
+  }
+
+  .service-process-copy > p:last-child {
+    width: 100%;
+    max-width: 39rem;
+    margin-top: 18px;
+    font-size: 15px !important;
+    line-height: 1.72;
+  }
+
+  .service-process-list {
+    width: 100%;
+  }
+
+  .service-process-list li {
+    display: grid !important;
+    grid-template-columns: 30px minmax(0, 1fr) 18px !important;
+    gap: 12px !important;
+    width: 100%;
+    padding: 24px 0 !important;
+  }
+
+  .service-process-list h3 {
+    max-width: 100%;
+    font-size: 24px !important;
+    line-height: 1.18;
+    overflow-wrap: break-word;
+  }
+
+  .service-process-list p {
+    max-width: 100%;
+    margin-top: 9px;
+    font-size: 15px !important;
+    line-height: 1.68;
+  }
+
+  .service-process-list li > svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .service-faq-list,
+  .faq-list {
+    width: 100%;
+  }
+
+  .service-faq-section .faq-item summary,
+  .faq-item summary {
+    grid-template-columns: 28px minmax(0, 1fr) 20px;
+    gap: 10px;
+    width: 100%;
+    padding: 20px 0;
+    font-size: 17px;
+    line-height: 1.42;
+  }
+
+  .service-faq-section .faq-item > p,
+  .faq-item > p {
+    max-width: 100%;
+    padding: 0 0 24px 38px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .service-related-grid > a svg {
+    right: 0;
+    bottom: 30px;
+  }
+
+  .service-contact-section {
+    display: block !important;
+    padding-top: 68px !important;
+    padding-bottom: 70px !important;
+  }
+
+  .service-contact-section h2 {
+    max-width: 100%;
+    font-size: clamp(38px, 10vw, 48px) !important;
+    line-height: 1.04;
+  }
+
+  .service-contact-section > div > p:last-of-type {
+    font-size: 15px;
+    line-height: 1.72;
+  }
+
+  .service-contact-button {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .service-contact-section address {
+    width: 100%;
+    margin-top: 42px;
+  }
+
+  .service-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 32px 20px 42px;
+  }
+
+  .service-footer p {
+    grid-column: auto;
+    grid-row: auto;
+    text-align: left;
+    line-height: 1.6;
+  }
+
+  .service-footer > a:last-child {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 390px) {
+  .service-page-shell .site-header { padding-inline: 16px; }
+  .service-landing-content,
+  .service-audience,
+  .service-content-section,
+  .service-faq-section,
+  .service-related-section,
+  .service-process-section,
+  .service-contact-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  .service-landing-content h1 { font-size: clamp(39px, 12vw, 51px); }
+  .service-detail-grid h3,
+  .service-related-grid h3 { font-size: clamp(26px, 7.8vw, 31px) !important; }
+  .service-variant-commercial-property .service-detail-grid article:nth-child(1) {
+    margin-inline: -18px;
+    width: calc(100% + 36px) !important;
+    padding-inline: 18px !important;
+  }
+}
+
+/* Mobile service-page navigation. Native details keeps it accessible without JS. */
+.service-mobile-nav { display: none; }
+@media (max-width: 760px) {
+  .service-mobile-nav {
+    display: block;
+    margin-left: 2px;
+  }
+  .service-mobile-nav > summary,
+  .service-mobile-services > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .service-mobile-nav > summary::-webkit-details-marker,
+  .service-mobile-services > summary::-webkit-details-marker { display: none; }
+  .service-mobile-nav > summary {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 44px;
+    color: #f6f6f3;
+  }
+  .service-mobile-nav-panel {
+    position: fixed;
+    inset: 80px 0 auto 0;
+    z-index: 79;
+    max-height: calc(100svh - 80px);
+    overflow-y: auto;
+    padding: 18px 20px 28px;
+    background: #17191a;
+    border-top: 1px solid rgba(255,255,255,.14);
+    border-bottom: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 24px 55px rgba(0,0,0,.36);
+  }
+  .service-mobile-nav-panel > a,
+  .service-mobile-services > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,.11);
+    color: #f0f1ee;
+    font-size: 17px;
+    line-height: 1.35;
+  }
+  .service-mobile-services > summary svg { color: var(--red); transition: transform .2s ease; }
+  .service-mobile-services[open] > summary svg { transform: rotate(45deg); }
+  .service-mobile-services > div { padding: 7px 0 10px 14px; }
+  .service-mobile-services a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    color: #c9ced0;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .service-mobile-services a[aria-current="page"] { color: #fff; }
+  .service-mobile-services a svg { color: var(--red); flex: none; }
+}
