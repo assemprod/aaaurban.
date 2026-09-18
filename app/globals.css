@@ -695,3 +695,384 @@ h2 em { color: #969b9d; }
   .site-footer { display: grid; grid-template-columns: 1fr auto; }
   .footer-services { grid-column: 1 / -1; }
 }
+
+/* =========================================================
+   2026-09-18 visual refinement: premium service pages + mobile
+   ========================================================= */
+
+/* Header follows the user while preserving the dark premium layer. */
+.site-header {
+  position: fixed;
+  background: linear-gradient(180deg, rgba(14,16,18,.94), rgba(14,16,18,.78));
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* Pure white only for the light editorial blocks requested by the client. */
+.inside,
+.advantages,
+.osi,
+.experience,
+.faq,
+.service-audience,
+.service-content-section,
+.service-faq-section,
+.service-related-section {
+  background-color: #fff;
+}
+
+/* Team: image-led editorial block instead of a dry list. */
+.team-visuals {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 14px;
+  margin: 6px 0 52px;
+}
+.team-visuals figure {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: #202426;
+  isolation: isolate;
+}
+.team-visuals figure:nth-child(2) { min-height: 600px; margin-top: 62px; }
+.team-visuals img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s ease;
+}
+.team-visuals figure:first-child img { object-position: 55% 50%; filter: saturate(.78) brightness(.82); }
+.team-visuals figure:nth-child(2) img { object-position: 50% 35%; filter: saturate(.92) contrast(1.02); }
+.team-visuals figure:hover img { transform: scale(1.025); }
+.team-visuals figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(13,16,18,.82), transparent 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+.team-visuals figcaption {
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  right: 28px;
+  bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(255,255,255,.45);
+  color: #fff;
+}
+.team-visuals figcaption span:first-child { font-size: 13px; letter-spacing: .11em; text-transform: uppercase; }
+.team-visuals figcaption span:last-child { color: #d7dcde; font-size: 13px; text-align: right; }
+
+/* Service page shared typography follows the main AAA URBAN system. */
+.service-page-shell,
+.service-page-shell button,
+.service-page-shell input,
+.service-page-shell textarea,
+.service-page-shell select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.service-page-shell em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.service-page-shell .site-header { height: 96px; }
+.service-page-shell .service-site-header { border-bottom-color: rgba(255,255,255,.16); }
+.service-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-bottom: 34px;
+  padding: 10px 0;
+  color: #d6dada;
+  border-bottom: 1px solid rgba(255,255,255,.32);
+  font-size: 13px;
+  transition: gap .2s ease, border-color .2s ease, color .2s ease;
+}
+.service-back:hover { gap: 6px; border-color: #fff; color: #fff; }
+.service-landing-hero {
+  min-height: min(900px, 100svh);
+  overflow: hidden;
+}
+.service-landing-content { padding-top: 164px; }
+.service-landing-content h1 {
+  text-transform: uppercase;
+  max-width: 930px;
+}
+.service-landing-content h1 em {
+  color: #fff;
+  text-transform: none;
+  font-size: .94em;
+}
+.service-landing-content h1 em span { color: var(--red); font-family: inherit; }
+.service-landing-lead { max-width: 650px; }
+.service-hero-geometry {
+  position: absolute;
+  right: 5.4vw;
+  top: 145px;
+  width: min(30vw, 430px);
+  height: min(30vw, 430px);
+  z-index: -1;
+  opacity: .42;
+  pointer-events: none;
+}
+.service-hero-geometry i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,.18);
+  transform: rotate(45deg);
+}
+.service-hero-geometry i:nth-child(2) { inset: 17%; border-color: rgba(223,34,42,.45); }
+.service-hero-geometry i:nth-child(3) { inset: 34%; }
+.service-hero-index { letter-spacing: .08em; }
+.service-audience li { position: relative; }
+.service-audience li>span:first-child { color: #a3262d; font-size: 11px; letter-spacing: .12em; min-width: 28px; }
+.service-detail-grid article { position: relative; overflow: hidden; }
+.service-detail-grid article>i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width .45s ease;
+}
+.service-detail-grid article:hover>i { width: 100%; }
+.service-process-list .process-number {
+  color: #e25b62;
+  font-size: 11px;
+  letter-spacing: .13em;
+  min-width: 36px;
+  padding-top: 4px;
+}
+.service-process-list li { display: grid; grid-template-columns: 44px 1fr auto; gap: 15px; }
+.service-process-list li>svg { position: static; margin-top: 3px; }
+
+/* Scroll reveal: every important service section gets its own entrance. */
+[data-service-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .72s cubic-bezier(.2,.7,.2,1), transform .72s cubic-bezier(.2,.7,.2,1);
+}
+[data-service-reveal].service-inview { opacity: 1; transform: translateY(0); }
+.service-detail-grid [data-service-reveal]:nth-child(2),
+.service-related-grid [data-service-reveal]:nth-child(2) { transition-delay: .08s; }
+.service-detail-grid [data-service-reveal]:nth-child(3),
+.service-related-grid [data-service-reveal]:nth-child(3) { transition-delay: .16s; }
+.service-detail-grid [data-service-reveal]:nth-child(4),
+.service-related-grid [data-service-reveal]:nth-child(4) { transition-delay: .24s; }
+
+/* 01 — Property management: calm editorial asymmetry. */
+.service-variant-property-management .service-landing-photo { object-position: 68% 48%; }
+.service-variant-property-management .service-landing-content { width: min(980px, 68%); }
+.service-variant-property-management .service-audience { grid-template-columns: 1.15fr .85fr; }
+.service-variant-property-management .service-detail-grid { grid-template-columns: 1.2fr .8fr .8fr 1.2fr; }
+.service-variant-property-management .service-detail-grid article:nth-child(1),
+.service-variant-property-management .service-detail-grid article:nth-child(4) { padding-top: 68px; }
+
+/* 02 — Building operation: engineering rhythm and technical rails. */
+.service-variant-building-operation .service-landing-shade {
+  background: linear-gradient(90deg,#0d1012f4 0%,#0d1012d9 48%,#11131435 84%),
+              linear-gradient(0deg,#111314 0%,transparent 32%);
+}
+.service-variant-building-operation .service-hero-geometry { border-left: 2px solid var(--red); width: 18vw; transform: skew(-8deg); opacity: .5; }
+.service-variant-building-operation .service-content-section { padding-top: 126px; }
+.service-variant-building-operation .service-detail-grid { grid-template-columns: repeat(2,1fr); gap: 0 56px; border-top: 0; }
+.service-variant-building-operation .service-detail-grid article,
+.service-variant-building-operation .service-detail-grid article+article { border-left: 0; border-top: 1px solid #c8cdce; padding: 38px 0 42px; }
+
+/* 03 — Engineering systems: darker technical core with red instrumentation accents. */
+.service-variant-engineering-systems .service-landing-photo { object-position: 73% center; }
+.service-variant-engineering-systems .service-landing-content { width: min(850px, 61%); }
+.service-variant-engineering-systems .service-content-section { background: #171a1c; color: #f5f4f0; }
+.service-variant-engineering-systems .service-content-section .eyebrow,
+.service-variant-engineering-systems .service-content-section .service-section-heading>p:last-child,
+.service-variant-engineering-systems .service-detail-grid p { color: #aeb5b8; }
+.service-variant-engineering-systems .service-detail-grid { border-color: rgba(255,255,255,.2); }
+.service-variant-engineering-systems .service-detail-grid article+article { border-left-color: rgba(255,255,255,.16); }
+.service-variant-engineering-systems .service-detail-grid article>span { color: #e15b61; }
+.service-variant-engineering-systems .service-process-section { background: #fff; color: var(--ink); }
+.service-variant-engineering-systems .service-process-copy>p:last-child,
+.service-variant-engineering-systems .service-process-list p { color: #626c70; }
+.service-variant-engineering-systems .service-process-list { border-top-color: #bcc3c5; }
+.service-variant-engineering-systems .service-process-list li { border-bottom-color: #ccd1d2; }
+
+/* 04 — ОСИ: bright, human and governance-focused. */
+.service-variant-osi-management .service-landing-hero { background: #fff; }
+.service-variant-osi-management .service-landing-photo { width: 49%; left: auto; z-index: -1; object-position: 58% center; }
+.service-variant-osi-management .service-landing-shade {
+  background: linear-gradient(90deg,#111314 0%,#111314 47%,#111314e8 51%,transparent 72%);
+}
+.service-variant-osi-management .service-landing-content { width: 59%; }
+.service-variant-osi-management .service-audience li { padding-block: 24px; }
+.service-variant-osi-management .service-content-section { padding-bottom: 130px; }
+.service-variant-osi-management .service-detail-grid article { min-height: 340px; }
+
+/* 05 — Residential complex: image-forward and softer editorial cadence. */
+.service-variant-residential-complex .service-landing-content { width: min(860px, 58%); }
+.service-variant-residential-complex .service-landing-photo { object-position: 72% 54%; }
+.service-variant-residential-complex .service-audience { grid-template-columns: .72fr 1.28fr; }
+.service-variant-residential-complex .service-detail-grid { grid-template-columns: repeat(2,1fr); gap: 14px; border-top: 0; }
+.service-variant-residential-complex .service-detail-grid article,
+.service-variant-residential-complex .service-detail-grid article+article {
+  border: 1px solid #d3d7d8;
+  padding: 34px;
+  min-height: 280px;
+}
+.service-variant-residential-complex .service-detail-grid article:nth-child(2),
+.service-variant-residential-complex .service-detail-grid article:nth-child(4) { transform: translateY(32px); }
+
+/* 06 — Business centre: vertical corporate composition. */
+.service-variant-business-center .service-landing-content { margin-left: 37%; width: min(900px, 60%); }
+.service-variant-business-center .service-landing-shade {
+  background: linear-gradient(90deg,#11131455 0%,#1113149f 34%,#0c0e10ee 63%,#0c0e10e9 100%);
+}
+.service-variant-business-center .service-hero-index { left: var(--gutter); right: auto; }
+.service-variant-business-center .service-audience { grid-template-columns: 1fr 1fr; }
+.service-variant-business-center .service-process-section { grid-template-columns: 1.1fr .9fr; }
+
+/* 07 — Commercial property: bold mosaic and compact cards. */
+.service-variant-commercial-property .service-landing-content { width: min(1050px, 78%); }
+.service-variant-commercial-property .service-landing-photo { filter: saturate(.65) contrast(1.05); }
+.service-variant-commercial-property .service-audience { grid-template-columns: 1.3fr .7fr; }
+.service-variant-commercial-property .service-detail-grid { gap: 16px; border: 0; }
+.service-variant-commercial-property .service-detail-grid article,
+.service-variant-commercial-property .service-detail-grid article+article { border: 1px solid #d0d5d6; padding: 30px; min-height: 325px; }
+.service-variant-commercial-property .service-detail-grid article:nth-child(1) { grid-column: span 2; background: #111314; color: #fff; }
+.service-variant-commercial-property .service-detail-grid article:nth-child(1) p { color: #b6bec1; }
+
+/* 08 — Residential audit: red diagnostic identity. */
+.service-variant-residential-audit .service-landing-hero { background: #a91c24; }
+.service-variant-residential-audit .service-landing-photo { opacity: .36; filter: grayscale(.75) contrast(1.1); }
+.service-variant-residential-audit .service-landing-shade { background: linear-gradient(90deg,#8f171fdc,#1113147f 72%,#1113142a); }
+.service-variant-residential-audit .service-landing-content h1 em { color: #ffd9dc; }
+.service-variant-residential-audit .service-content-section { background: #b11e27; color: #fff; }
+.service-variant-residential-audit .service-content-section .eyebrow,
+.service-variant-residential-audit .service-content-section .service-section-heading>p:last-child,
+.service-variant-residential-audit .service-detail-grid p { color: #ffe1e3; }
+.service-variant-residential-audit .service-detail-grid { border-color: rgba(255,255,255,.35); }
+.service-variant-residential-audit .service-detail-grid article+article { border-left-color: rgba(255,255,255,.28); }
+.service-variant-residential-audit .service-detail-grid article>span { color: #fff; }
+.service-variant-residential-audit .service-detail-grid article>i { background: #fff; }
+
+/* Mobile main navigation: services are a real submenu, not eight root items. */
+.mobile-services-submenu { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.mobile-services-submenu>summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  font-size: 19px;
+}
+.mobile-services-submenu>summary::-webkit-details-marker { display: none; }
+.mobile-services-submenu>summary svg { transition: transform .25s ease; }
+.mobile-services-submenu[open]>summary svg { transform: rotate(180deg); }
+.mobile-services-submenu .mobile-services-list { padding: 0 0 12px 16px; border-top: 1px solid rgba(255,255,255,.09); }
+.mobile-services-submenu .mobile-services-list a { font-size: 15px; padding-block: 13px; }
+.mobile-primary-nav { border-top: 0; margin-top: 12px; }
+
+@media (max-width: 1050px) {
+  .service-variant-property-management .service-detail-grid,
+  .service-variant-building-operation .service-detail-grid,
+  .service-variant-residential-complex .service-detail-grid,
+  .service-variant-commercial-property .service-detail-grid { grid-template-columns: repeat(2,1fr); }
+  .service-variant-property-management .service-detail-grid article { padding-top: 32px; }
+  .service-variant-business-center .service-landing-content { margin-left: 18%; width: 76%; }
+  .team-visuals { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+  .service-page-shell .site-header { height: 80px; }
+  .service-page-shell .wordmark { display: none; }
+  .service-page-shell .header-cta { display: none; }
+  .service-page-shell .header-actions { margin-left: auto; }
+  .service-landing-hero { min-height: 100svh; }
+  .service-back { margin-bottom: 27px; }
+  .service-landing-content { padding: 126px 21px 150px; }
+  .service-landing-content h1 { font-size: clamp(40px,12vw,62px); }
+  .service-landing-content h1 em { font-size: .93em; }
+  .service-hero-geometry { right: -20%; top: 25%; width: 68vw; height: 68vw; }
+  .service-audience li>span:first-child { min-width: 26px; }
+  .service-process-list li { grid-template-columns: 34px 1fr auto; }
+  .service-variant-property-management .service-landing-content,
+  .service-variant-engineering-systems .service-landing-content,
+  .service-variant-residential-complex .service-landing-content,
+  .service-variant-commercial-property .service-landing-content,
+  .service-variant-business-center .service-landing-content,
+  .service-variant-osi-management .service-landing-content { width: 100%; margin-left: 0; }
+  .service-variant-osi-management .service-landing-photo { width: 100%; left: 0; opacity: .5; }
+  .service-variant-osi-management .service-landing-shade { background: linear-gradient(0deg,#111314 0%,#111314d8 60%,#111314a8 100%); }
+  .service-variant-residential-complex .service-detail-grid article:nth-child(2),
+  .service-variant-residential-complex .service-detail-grid article:nth-child(4) { transform: none; }
+  .service-variant-commercial-property .service-detail-grid article:nth-child(1) { grid-column: auto; }
+  .service-variant-engineering-systems .service-content-section { background: #171a1c !important; }
+  .service-variant-residential-audit .service-content-section { background: #b11e27 !important; }
+  .team-visuals { grid-template-columns: 1fr; margin-bottom: 38px; }
+  .team-visuals figure,
+  .team-visuals figure:nth-child(2) { min-height: 430px; margin-top: 0; }
+}
+
+@media (max-width: 640px) {
+  /* Mobile hero now uses the photo as a true background, matching the supplied reference. */
+  .hero {
+    position: relative;
+    display: block;
+    min-height: 100svh;
+    padding-bottom: 78px;
+    background: #111314;
+    isolation: isolate;
+  }
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 67% center;
+    z-index: -3;
+  }
+  .hero-shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      linear-gradient(180deg, rgba(12,14,16,.68) 0%, rgba(12,14,16,.86) 38%, rgba(12,14,16,.42) 67%, rgba(12,14,16,.82) 100%),
+      linear-gradient(90deg, rgba(12,14,16,.92), rgba(12,14,16,.22));
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 122px var(--gutter) 118px;
+    width: 100%;
+  }
+  .hero-title { max-width: 560px; }
+  .hero-description { max-width: 470px; color: #e0e1df; }
+  .hero-scroll { z-index: 2; }
+  .site-header { background: rgba(14,16,18,.88); }
+  .team-visuals figcaption { left: 20px; right: 20px; bottom: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-service-reveal] { opacity: 1; transform: none; transition: none; }
+  .team-visuals img,
+  .service-detail-grid article>i,
+  .mobile-services-submenu>summary svg { transition: none; }
+}
+.service-landing-content h1>span[aria-hidden="true"] { display: block; }
+html { scroll-padding-top: 112px; }
+@media (max-width: 900px) { html { scroll-padding-top: 96px; } }
+@media (max-width: 640px) { html { scroll-padding-top: 86px; } }
